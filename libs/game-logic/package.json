@@ -1,0 +1,10 @@
+{
+  "name": "@tma-game/game-logic",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "private": true,
+  "dependencies": {
+    "@tma-game/shared-types": "*"
+  }
+}

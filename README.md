@@ -1,107 +1,123 @@
-# New Nx Repository
+# TMA Game — Dev Commands
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Перший запуск
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
-
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
-
-## Try the full Nx platform
-🚀 If you haven't connected to Nx Cloud yet, [complete your setup here](https://cloud.nx.app/setup/connect-workspace/guide). Get faster builds with remote caching, distributed task execution, and self-healing CI. [See how your workspace can benefit](#nx-cloud).
-
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+```bash
+# Встановити залежності
+npm install
 ```
 
-## Run tasks
-
-To build the library use:
-
-```sh
-npx nx build pkg1
+Створи `.env` в корені проекту:
+```env
+TELEGRAM_BOT_TOKEN=твій_токен_від_botfather
+WEBAPP_URL=https://твій-ngrok-url.ngrok-free.app
 ```
 
-To run any task with Nx use:
+---
 
-```sh
-npx nx <target> <project-name>
+## Запуск сервісів
+
+Кожен сервіс запускається в **окремому терміналі**.
+
+### Frontend
+```bash
+npx nx serve frontend
+# http://localhost:4200
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
-
-```
-npx nx release
+### Backend
+```bash
+npx nx serve backend
+# http://localhost:3000
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+### Bot
+```bash
+npx nx serve bot
+# працює через polling, порт не потрібен
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
+### Всі одразу
+```bash
+npx nx run-many --target=serve --projects=frontend,backend,bot --parallel=3
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+---
 
-## Nx Cloud
+## ngrok (тунель для Telegram WebApp)
 
-Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+> Потрібен щоб Telegram міг відкрити локальний фронт по HTTPS
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Set up CI (non-Github Actions CI)
-
-**Note:** This is only required if your CI provider is not GitHub Actions.
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
+```bash
+# Запустити тунель
+ngrok http 4200
 ```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Після запуску скопіюй URL виду `https://xxxx.ngrok-free.app` і встав в `.env` як `WEBAPP_URL`.
 
-## Install Nx Console
+Після зміни `WEBAPP_URL` — **перезапусти бота**.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+> ⚠️ Безкоштовний ngrok змінює URL при кожному перезапуску — не забувай оновлювати `.env` і перезапускати бота.
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Useful links
+## Тестування
 
-Learn more:
+| Що тестуєш | Де |
+|---|---|
+| UI / верстка | Браузер `http://localhost:4200` |
+| Логіка / хуки з Telegram даними | Telegram через ngrok |
+| API ендпоінти | Postman / Thunder Client → `http://localhost:3000` |
+| Повний флоу | web.telegram.org → бот → кнопка Грати → F12 |
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Дебагінг в Telegram Web
+1. Відкрий [web.telegram.org](https://web.telegram.org)
+2. Знайди бота → `/start` → натисни "🎮 Грати"
+3. `F12` → Console — бачиш всі `console.log`
+4. Network tab — бачиш всі запити до бекенду
 
-And join the Nx community:
+---
 
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Збірка
+
+```bash
+# Зібрати всі проекти
+npx nx run-many --target=build --all
+
+# Зібрати окремо
+npx nx build frontend
+npx nx build backend
+npx nx build bot
+```
+
+---
+
+## Корисні команди nx
+
+```bash
+# Переглянути граф залежностей
+npx nx graph
+
+# Очистити кеш
+npx nx reset
+
+# Запустити без кешу
+npx nx serve frontend --skip-nx-cache
+```
+
+---
+
+## Структура проекту
+
+```
+tma-game/
+├── apps/
+│   ├── frontend/        # React + Vite + MUI (порт 4200)
+│   ├── backend/         # NestJS API (порт 3000)
+│   └── bot/             # NestJS + Telegraf (polling)
+├── libs/
+│   ├── shared-types/    # спільні TypeScript типи
+│   └── game-logic/      # логіка гри
+├── .env                 # токени (не комітити!)
+└── nx.json
+```

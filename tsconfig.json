@@ -2,5 +2,21 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./apps/frontend"
+    },
+    {
+      "path": "./apps/backend"
+    },
+    {
+      "path": "./apps/bot"
+    },
+    {
+      "path": "./libs/shared-types"
+    },
+    {
+      "path": "./libs/game-logic"
+    }
+  ]
 }
