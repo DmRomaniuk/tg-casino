@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Symbol } from '@tma-game/shared-types';
 import { useMutation } from '@tanstack/react-query';
-import { useAuthStore } from '../../../entities/user/model/authStore';
+import { useAuthStore } from '../../../app/store/authStore';
 import { useAudioTone } from '../../../shared/lib/useAudioTone';
 import { triggerImpact, triggerNotification } from '../../../shared/lib/haptics';
 import { spin } from '../api/spin.api';

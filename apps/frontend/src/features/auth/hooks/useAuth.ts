@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { authenticate } from '../api/auth.api';
 import { AuthResponse } from '../api/auth.types';
-import { useAuthStore } from '../../../entities/user/model/authStore';
+import { useAuthStore } from '../../../app/store/authStore';
 
 export const useAuth = () => {
   const setAuth = useAuthStore((state) => state.setAuth);

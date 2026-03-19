@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User } from '@tma-game/shared-types';
+import { User } from '@tma-game/shared-types/dist';
 
 interface AuthState {
   token: string | null;

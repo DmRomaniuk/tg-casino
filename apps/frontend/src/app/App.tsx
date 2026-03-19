@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Box, CssBaseline, GlobalStyles, ThemeProvider, Typography } from '@mui/material';
 import { useAuth } from '../features/auth/hooks/useAuth';
 import { useTelegramUser } from '../features/auth/hooks/useTelegramUser';
-import { useAuthStore } from '../entities/user/model/authStore';
+import { useAuthStore } from './store/authStore';
 import { HeaderBar } from '../widgets/header-bar/HeaderBar';
 import { Leaderboard } from '../widgets/leaderboard/Leaderboard';
 import { SlotMachine } from '../widgets/slot-machine/SlotMachine';

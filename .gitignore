@@ -8,6 +8,20 @@ out-tsc
 # dependencies
 node_modules
 
+# local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.local
+*.secret
+*.secrets
+*.pem
+*.key
+*.p12
+*.pfx
+
 # IDEs and editors
 /.idea
 .project
@@ -32,7 +46,11 @@ node_modules
 npm-debug.log
 yarn-error.log
 testem.log
+*.log
 /typings
+*.sqlite
+*.sqlite3
+*.db
 
 # System Files
 .DS_Store

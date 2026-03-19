@@ -3,7 +3,7 @@ import { Chip, CircularProgress, Divider, Stack, Typography } from '@mui/materia
 import { useQuery } from '@tanstack/react-query';
 import { fetchLeaderboard } from '../../features/leaderboard/api/leaderboard.api';
 import { LeaderboardItem, LeaderboardPanel } from './Leaderboard.styled';
-import { useAuthStore } from '../../entities/user/model/authStore';
+import { useAuthStore } from '../../app/store/authStore';
 
 export const Leaderboard = memo(function Leaderboard() {
   const userId = useAuthStore((state) => state.user?.id);
